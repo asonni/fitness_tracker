@@ -1,55 +1,22 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/validators.dart';
 import '../widgets/app_button.dart';
+import '/controllers/sign_up_controller.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  final formKey = GlobalKey<FormState>();
-  late final TextEditingController nameController;
-  late final TextEditingController emailController;
-  late final TextEditingController passwordController;
-  late final TextEditingController confirmPasswordController;
-  late final TextEditingController phoneController;
-
-  @override
-  void initState() {
-    super.initState();
-    nameController = TextEditingController();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    confirmPasswordController = TextEditingController();
-    phoneController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    phoneController.dispose();
-    super.dispose();
-  }
-
-  Future<void> onSignUp() async {
-    if (formKey.currentState?.validate() != true) return;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignUpController());
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Form(
-            key: formKey,
+            key: controller.formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -79,7 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 48),
                 TextFormField(
-                  controller: nameController,
+                  controller: controller.nameController,
                   decoration: InputDecoration(
                     labelText: 'Name',
                     hintText: 'Enter your name',
@@ -94,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: emailController,
+                  controller: controller.emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
@@ -110,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: phoneController,
+                  controller: controller.phoneController,
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
                     hintText: 'Enter your phone number',
@@ -126,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: passwordController,
+                  controller: controller.passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter your password',
@@ -142,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: confirmPasswordController,
+                  controller: controller.confirmPasswordController,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
                     hintText: 'Confirm your password',
@@ -154,18 +121,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   obscureText: true,
                   textInputAction: TextInputAction.done,
                   validator: (value) => Validators.validateConfirmPassword(
-                    passwordController.text,
+                    controller.passwordController.text,
                     value,
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  onFieldSubmitted: (_) => onSignUp(),
+                  onFieldSubmitted: (_) => controller.onSignUp(),
                 ),
                 const SizedBox(height: 24),
-                AppButton(text: 'Create Account', onPressed: onSignUp),
+                Obx(() {
+                  return AppButton(
+                    text: 'Create Account',
+                    onPressed: controller.onSignUp,
+                    isLoading: controller.isLoading.value,
+                  );
+                }),
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                    Get.back();
                   },
                   child: Text.rich(
                     TextSpan(

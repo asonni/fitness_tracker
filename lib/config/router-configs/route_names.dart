@@ -1,0 +1,7 @@
+class RouteNames {
+  static const String splash = '/splash';
+  static const String onboarding = '/onboarding';
+  static const String workoutList = '/workoutList';
+  static const String signin = '/signin';
+  static const String signup = '/signup';
+}

@@ -1,54 +1,23 @@
-import 'package:fitness_tracker/screens/workout_list_screen.dart';
+import 'package:fitness_tracker/config/router-configs/route_names.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '/controllers/sign_in_controller.dart';
 import '../utils/validators.dart';
 import '../widgets/app_button.dart';
-import 'sign_up_screen.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  final formKey = GlobalKey<FormState>();
-  late final TextEditingController emailController;
-  late final TextEditingController passwordController;
-
-  @override
-  void initState() {
-    super.initState();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  Future<void> onSignIn() async {
-    if (formKey.currentState?.validate() != true) return;
-
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const WorkoutListScreen(),
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignInController());
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Form(
-            key: formKey,
+            key: controller.formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,7 +47,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 const SizedBox(height: 48),
                 TextFormField(
-                  controller: emailController,
+                  controller: controller.emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
@@ -95,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: passwordController,
+                  controller: controller.passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter your password',
@@ -109,21 +78,28 @@ class _SignInScreenState extends State<SignInScreen> {
                   textInputAction: TextInputAction.done,
                   validator: (value) => Validators.validatePassword(value),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  onFieldSubmitted: (_) => onSignIn(),
+                  onFieldSubmitted: (_) => controller.onSignIn(),
                 ),
                 const SizedBox(height: 24),
-                AppButton(onPressed: onSignIn, text: 'Sign In'),
+                Obx(() {
+                  return AppButton(
+                    text: 'Sign In',
+                    onPressed: controller.onSignIn,
+                    isLoading: controller.isLoading.value,
+                  );
+                }),
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () {
-                    formKey.currentState?.reset();
-                    emailController.clear();
-                    passwordController.clear();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SignUpScreen(),
-                      ),
-                    );
+                    controller.formKey.currentState?.reset();
+                    controller.emailController.clear();
+                    controller.passwordController.clear();
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const SignUpScreen(),
+                    //   ),
+                    // );
+                    Get.toNamed(RouteNames.signup);
                   },
                   child: Text.rich(
                     TextSpan(

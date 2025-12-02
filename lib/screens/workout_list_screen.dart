@@ -1,4 +1,6 @@
+import 'package:fitness_tracker/controllers/workout_list_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../enums/workout_type.dart';
 import '../widgets/workout_form_dialog.dart';
@@ -9,18 +11,30 @@ class WorkoutListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final workoutController = Get.put(WorkoutListController());
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: const SizedBox.shrink(),
           toolbarHeight: 170,
-          flexibleSpace: const SafeArea(
+          flexibleSpace: SafeArea(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.only(bottom: 56.0, left: 16.0, right: 16.0),
-                child: WorkoutCalendarGraph(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        workoutController.signOut();
+                      },
+                      icon: Icon(Icons.logout_outlined),
+                    ),
+                    WorkoutCalendarGraph(),
+                  ],
+                ),
               ),
             ),
           ),

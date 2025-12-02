@@ -1,14 +1,15 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '/controllers/onboarding_controller.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'sign_in_screen.dart';
-// import 'workout_list_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OnboardingController());
     return IntroductionScreen(
       pages: [
         PageViewModel(
@@ -31,13 +32,8 @@ class OnboardingScreen extends StatelessWidget {
       showNextButton: true,
       next: const Text('Next'),
       done: const Text('Get Started'),
-      onDone: () => _onDone(context),
+      onDone: controller.onDone,
+      // onDone: () => controller.onDone(),
     );
-  }
-
-  void _onDone(BuildContext context) async {
-    Navigator.of(
-      context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => const SignInScreen()));
   }
 }
