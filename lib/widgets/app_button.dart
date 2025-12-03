@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'circular_indicator.dart';
+
 class AppButton extends StatelessWidget {
   final String text;
   final void Function() onPressed;
@@ -30,16 +32,7 @@ class AppButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: isLoading
-            ? const SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: Colors.white,
-                ),
-              )
-            : Text(text),
+        child: isLoading ? const CircularIndicator() : Text(text),
       ),
     );
   }

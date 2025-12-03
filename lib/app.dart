@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '/config/router-configs/route_names.dart';
-import '/config/router-configs/app_routes.dart';
+import 'config/router-configs/app_routes.dart';
+import 'config/router-configs/route_names.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -19,7 +19,7 @@ class App extends StatelessWidget {
           primary: Colors.white,
           secondary: Colors.white70,
           surface: Color(0xFF1A237E),
-          onSurface: Color.fromRGBO(255, 255, 255, 1),
+          onSurface: Colors.white,
         ),
         appBarTheme: const AppBarTheme(
           elevation: 0,
@@ -45,6 +45,7 @@ class App extends StatelessWidget {
       ),
       getPages: AppRoutes.getPages,
       initialRoute: RouteNames.splash,
+      // home: const SplashScreen(),
     );
   }
 }

@@ -1,4 +1,12 @@
 class Validators {
+  static String? validateEmptyField(String? value, String fieldName) {
+    if (value == null || value.trim().isEmpty) {
+      return '$fieldName is required';
+    }
+
+    return null;
+  }
+
   static String? validateName(String? name) {
     if (name == null || name.trim().isEmpty) {
       return 'Name is required';
@@ -62,13 +70,13 @@ class Validators {
     }
 
     if (phone.length < 10) {
-      return 'Phone number must be at least 10 digts';
+      return 'Phone number must be at least 10 digits';
     }
 
-    final phoneRegex = RegExp(r'^09[1-5]\d{7}$');
+    final phoneRegex = RegExp(r'^09[0-5]\d{7}$');
 
     return phoneRegex.hasMatch(phone)
         ? null
-        : 'Phone number must starts with 091, 092, 093, 094, or 095';
+        : 'Phone number must starts with 090, 091, 092, 093, 094, or 095';
   }
 }

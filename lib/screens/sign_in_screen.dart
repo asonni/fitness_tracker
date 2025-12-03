@@ -1,8 +1,8 @@
-import 'package:fitness_tracker/config/router-configs/route_names.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '/controllers/sign_in_controller.dart';
+import '../config/router-configs/route_names.dart';
+import '../controllers/sign_in_controller.dart';
 import '../utils/validators.dart';
 import '../widgets/app_button.dart';
 
@@ -11,13 +11,16 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignInController());
+    final SignInController controller = Get.put(SignInController());
+    final formKey = controller.formKey;
+    final emailController = controller.emailController;
+    final passwordController = controller.passwordController;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Form(
-            key: controller.formKey,
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -47,7 +50,7 @@ class SignInScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 48),
                 TextFormField(
-                  controller: controller.emailController,
+                  controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
@@ -64,7 +67,7 @@ class SignInScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: controller.passwordController,
+                  controller: passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter your password',
@@ -91,14 +94,9 @@ class SignInScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () {
-                    controller.formKey.currentState?.reset();
-                    controller.emailController.clear();
-                    controller.passwordController.clear();
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const SignUpScreen(),
-                    //   ),
-                    // );
+                    formKey.currentState?.reset();
+                    emailController.clear();
+                    passwordController.clear();
                     Get.toNamed(RouteNames.signup);
                   },
                   child: Text.rich(

@@ -1,110 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../controllers/workout_form_dialog_controller.dart';
 import '../enums/workout_type.dart';
+import '../utils/validators.dart';
 
-class WorkoutFormDialog extends StatefulWidget {
+class WorkoutFormDialog extends StatelessWidget {
   const WorkoutFormDialog({super.key});
 
   @override
-  State<WorkoutFormDialog> createState() => _WorkoutFormDialogState();
-}
-
-class _WorkoutFormDialogState extends State<WorkoutFormDialog> {
-  final formKey = GlobalKey<FormState>();
-  late final TextEditingController nameController;
-  late final TextEditingController weightController;
-  late final TextEditingController repsController;
-  late final TextEditingController setsController;
-  WorkoutType selectedType = WorkoutType.upperBody;
-
-  @override
-  void initState() {
-    super.initState();
-    nameController = TextEditingController();
-    weightController = TextEditingController();
-    repsController = TextEditingController();
-    setsController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    weightController.dispose();
-    repsController.dispose();
-    setsController.dispose();
-    super.dispose();
-  }
-
-  void submitForm() {
-    // Your submit form logic here
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final workoutFormCtl = Get.put(WorkoutFormDialogController());
     return AlertDialog(
       title: const Text('Add Workout'),
       content: Form(
-        key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
-              validator: (value) =>
-                  value?.isEmpty ?? true ? 'Please enter a name' : null,
-            ),
-            TextFormField(
-              controller: weightController,
-              decoration: const InputDecoration(labelText: 'Weight (kg)'),
-              keyboardType: TextInputType.number,
-              validator: (value) =>
-                  value?.isEmpty ?? true ? 'Please enter weight' : null,
-            ),
-            TextFormField(
-              controller: repsController,
-              decoration: const InputDecoration(labelText: 'Reps'),
-              keyboardType: TextInputType.number,
-              validator: (value) =>
-                  value?.isEmpty ?? true ? 'Please enter reps' : null,
-            ),
-            TextFormField(
-              controller: setsController,
-              decoration: const InputDecoration(labelText: 'Sets'),
-              keyboardType: TextInputType.number,
-              validator: (value) =>
-                  value?.isEmpty ?? true ? 'Please enter sets' : null,
-            ),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<WorkoutType>(
-              initialValue: selectedType,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    selectedType = value;
-                  });
-                }
-              },
-              items: const [
-                DropdownMenuItem(
-                  value: WorkoutType.upperBody,
-                  child: Text('Upper Body'),
-                ),
-                DropdownMenuItem(
-                  value: WorkoutType.lowerBody,
-                  child: Text('Lower Body'),
-                ),
-              ],
-            ),
-          ],
+        key: workoutFormCtl.formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: workoutFormCtl.nameController,
+                decoration: const InputDecoration(labelText: 'Name'),
+                validator: (value) =>
+                    Validators.validateEmptyField(value, 'Name'),
+              ),
+              TextFormField(
+                controller: workoutFormCtl.weightController,
+                decoration: const InputDecoration(labelText: 'Weight (kg)'),
+                keyboardType: TextInputType.number,
+                validator: (value) =>
+                    Validators.validateEmptyField(value, 'Weight'),
+              ),
+              TextFormField(
+                controller: workoutFormCtl.repsController,
+                decoration: const InputDecoration(labelText: 'Reps'),
+                keyboardType: TextInputType.number,
+                validator: (value) =>
+                    Validators.validateEmptyField(value, 'Reps'),
+              ),
+              TextFormField(
+                controller: workoutFormCtl.setsController,
+                decoration: const InputDecoration(labelText: 'Sets'),
+                keyboardType: TextInputType.number,
+                validator: (value) =>
+                    Validators.validateEmptyField(value, 'Sets'),
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<WorkoutType>(
+                initialValue: workoutFormCtl.selectedType,
+                onChanged: (value) {
+                  if (value != null) {
+                    workoutFormCtl.selectedType = value;
+                  }
+                },
+                items: const [
+                  DropdownMenuItem(
+                    value: WorkoutType.upperBody,
+                    child: Text('Upper Body'),
+                  ),
+                  DropdownMenuItem(
+                    value: WorkoutType.lowerBody,
+                    child: Text('Lower Body'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Get.back(),
           child: const Text('Cancel'),
         ),
-        TextButton(onPressed: submitForm, child: const Text('Add')),
+        TextButton(
+          onPressed: () {
+            workoutFormCtl.submitForm();
+            Get.back();
+          },
+          child: const Text('Add'),
+        ),
       ],
     );
   }

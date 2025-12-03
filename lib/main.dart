@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:fitness_tracker/firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'app.dart';
+import 'firebase_options.dart';
 
 void main() async {
   // Ensure that plugin services are initialized before using them

@@ -1,15 +1,16 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '/controllers/onboarding_controller.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+
+import '../controllers/onboarding_controller.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OnboardingController());
+    final onboardingController = Get.put(OnboardingController());
     return IntroductionScreen(
       pages: [
         PageViewModel(
@@ -32,8 +33,7 @@ class OnboardingScreen extends StatelessWidget {
       showNextButton: true,
       next: const Text('Next'),
       done: const Text('Get Started'),
-      onDone: controller.onDone,
-      // onDone: () => controller.onDone(),
+      onDone: onboardingController.onDone,
     );
   }
 }

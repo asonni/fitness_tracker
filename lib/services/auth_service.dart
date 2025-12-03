@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitness_tracker/models/user_model.dart';
 import 'package:get/get.dart';
 
+import '../models/user_model.dart';
+
 class AuthService extends GetxService {
+  static AuthService get instance => Get.find<AuthService>();
+
   final _firebaseAuth = FirebaseAuth.instance;
   final _firebaseFirestore = FirebaseFirestore.instance;
 
@@ -12,6 +15,7 @@ class AuthService extends GetxService {
     required String password,
   }) async {
     try {
+      /// sign-in on firebase-auth.
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -30,8 +34,6 @@ class AuthService extends GetxService {
         password: firebaseUser.password!,
       );
 
-      print(cred);
-
       if (cred.user == null) {
         throw Exception('User not created');
       }
@@ -49,14 +51,6 @@ class AuthService extends GetxService {
           .collection('users')
           .doc(userId)
           .set(newUser.toDoc());
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<void> signOut() async {
-    try {
-      await _firebaseAuth.signOut();
     } catch (e) {
       rethrow;
     }
@@ -81,6 +75,14 @@ class AuthService extends GetxService {
       }
 
       return UserModel.fromDoc(userDoc);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      return await _firebaseAuth.signOut();
     } catch (e) {
       rethrow;
     }

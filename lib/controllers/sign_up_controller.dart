@@ -1,17 +1,18 @@
-import 'package:fitness_tracker/models/user_model.dart';
-import 'package:fitness_tracker/services/auth_service.dart';
-import 'package:fitness_tracker/utils/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../models/user_model.dart';
+import '../services/auth_service.dart';
+import '../utils/app_snackbars.dart';
+
 class SignUpController extends GetxController {
+  final _authService = AuthService.instance;
   final formKey = GlobalKey<FormState>();
-  final _authService = Get.find<AuthService>();
   late final TextEditingController nameController;
   late final TextEditingController emailController;
+  late final TextEditingController phoneController;
   late final TextEditingController passwordController;
   late final TextEditingController confirmPasswordController;
-  late final TextEditingController phoneController;
   final RxBool isLoading = false.obs;
 
   @override

@@ -1,22 +1,28 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../controllers/sign_up_controller.dart';
 import '../utils/validators.dart';
 import '../widgets/app_button.dart';
-import '/controllers/sign_up_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignUpController());
+    final SignUpController controller = Get.put(SignUpController());
+    final formKey = controller.formKey;
+    final nameController = controller.nameController;
+    final emailController = controller.emailController;
+    final phoneController = controller.phoneController;
+    final passwordController = controller.passwordController;
+    final confirmPasswordController = controller.confirmPasswordController;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Form(
-            key: controller.formKey,
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +52,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 48),
                 TextFormField(
-                  controller: controller.nameController,
+                  controller: nameController,
                   decoration: InputDecoration(
                     labelText: 'Name',
                     hintText: 'Enter your name',
@@ -61,7 +67,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: controller.emailController,
+                  controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
@@ -77,7 +83,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: controller.phoneController,
+                  controller: phoneController,
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
                     hintText: 'Enter your phone number',
@@ -85,6 +91,7 @@ class SignUpScreen extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
+                    errorMaxLines: 3,
                   ),
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.next,
@@ -93,7 +100,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: controller.passwordController,
+                  controller: passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter your password',
@@ -101,15 +108,16 @@ class SignUpScreen extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
+                    errorMaxLines: 3,
                   ),
                   obscureText: true,
                   textInputAction: TextInputAction.next,
-                  validator: Validators.validatePassword,
+                  validator: Validators.validatePasswordStrong,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: controller.confirmPasswordController,
+                  controller: confirmPasswordController,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
                     hintText: 'Confirm your password',
@@ -121,7 +129,7 @@ class SignUpScreen extends StatelessWidget {
                   obscureText: true,
                   textInputAction: TextInputAction.done,
                   validator: (value) => Validators.validateConfirmPassword(
-                    controller.passwordController.text,
+                    passwordController.text,
                     value,
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,

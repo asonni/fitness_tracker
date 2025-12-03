@@ -1,7 +1,8 @@
-import 'package:fitness_tracker/config/constants/constants.dart';
-import 'package:fitness_tracker/config/router-configs/route_names.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../config/constants/constants.dart';
+import '../config/router-configs/route_names.dart';
 
 class OnboardingController extends GetxController {
   void onDone() async {
