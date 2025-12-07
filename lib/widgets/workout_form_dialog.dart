@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../controllers/workout_form_dialog_controller.dart';
-import '../enums/workout_type.dart';
 import '../utils/validators.dart';
+import '../enums/workout_type.dart';
+import '../controllers/workout_form_dialog_controller.dart';
 
 class WorkoutFormDialog extends StatelessWidget {
   const WorkoutFormDialog({super.key});
@@ -75,10 +75,7 @@ class WorkoutFormDialog extends StatelessWidget {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: () {
-            workoutFormCtl.submitForm();
-            Get.back();
-          },
+          onPressed: workoutFormCtl.submitForm,
           child: const Text('Add'),
         ),
       ],

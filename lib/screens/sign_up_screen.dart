@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../controllers/sign_up_controller.dart';
 import '../utils/validators.dart';
 import '../widgets/app_button.dart';
+import '../controllers/sign_up_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

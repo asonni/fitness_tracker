@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/auth_service.dart';
 import '../config/constants/constants.dart';
 import '../config/router-configs/route_names.dart';
-import '../services/auth_service.dart';
 
 class SplashController extends GetxController {
   final _authService = Get.put(AuthService());
@@ -32,7 +32,7 @@ class SplashController extends GetxController {
       return;
     }
 
-    Get.offNamed(RouteNames.workoutList);
+    Get.offNamed(RouteNames.main);
   }
 
   Future<bool> _hasSeenOnBoarding() async {

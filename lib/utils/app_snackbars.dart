@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppSnackbars {
   static void errorSnackbar({required String title, String message = ''}) {
+    Get.closeAllSnackbars();
     Get.snackbar(
       title,
       message,
@@ -16,6 +17,7 @@ class AppSnackbars {
   }
 
   static void successSnackbar({required String title, String message = ''}) {
+    Get.closeAllSnackbars();
     Get.snackbar(
       title,
       message,
@@ -29,6 +31,7 @@ class AppSnackbars {
   }
 
   static void infoSnackbar({required String title, String message = ''}) {
+    Get.closeAllSnackbars();
     Get.snackbar(
       title,
       message,
@@ -49,6 +52,7 @@ class AppSnackbars {
     SnackPosition snackPosition = SnackPosition.BOTTOM,
     Duration duration = const Duration(seconds: 3),
   }) {
+    Get.closeAllSnackbars();
     Get.snackbar(
       title,
       message,

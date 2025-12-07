@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 import '../enums/workout_type.dart';
+import '../utils/app_snackbars.dart';
 import 'workout_list_controller.dart';
 
 class WorkoutFormDialogController extends GetxController {
@@ -39,12 +40,20 @@ class WorkoutFormDialogController extends GetxController {
     final weight = double.tryParse(weightController.text.trim()) ?? 0.0;
     final reps = int.tryParse(repsController.text.trim()) ?? 0;
     final sets = int.tryParse(setsController.text.trim()) ?? 0;
-    await _workoutListController.addWorkout(
+    final success = await _workoutListController.addWorkout(
       name: name,
       weight: weight,
       reps: reps,
       sets: sets,
       type: selectedType,
+    );
+    if (!success) return;
+    // Close dialog
+    Get.back();
+    // Show success snackbar
+    AppSnackbars.successSnackbar(
+      title: 'Workout Added',
+      message: 'The workout has been successfully added.',
     );
     // clear form
     nameController.clear();

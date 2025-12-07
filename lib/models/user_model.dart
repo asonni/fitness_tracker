@@ -6,6 +6,7 @@ class UserModel {
   final String email;
   final String phoneNumber;
   final String? password;
+  final String? bio;
 
   UserModel({
     required this.id,
@@ -13,6 +14,7 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     this.password,
+    this.bio,
   });
 
   // empty
@@ -22,6 +24,7 @@ class UserModel {
       name: '',
       email: '',
       phoneNumber: '',
+      bio: '',
     );
   }
 
@@ -31,6 +34,7 @@ class UserModel {
       'name': name,
       'email': email,
       'phoneNumber': phoneNumber,
+      'bio': bio,
     };
   }
 
@@ -41,6 +45,7 @@ class UserModel {
       name: data?['name'] as String? ?? '',
       email: data?['email'] as String? ?? '',
       phoneNumber: data?['phoneNumber'] as String? ?? '',
+      bio: data?['bio'] as String? ?? '',
     );
   }
 
@@ -51,6 +56,7 @@ class UserModel {
       email: entity.email,
       phoneNumber: entity.phoneNumber,
       password: entity.password,
+      bio: entity.bio,
     );
   }
 
@@ -60,7 +66,7 @@ class UserModel {
       name: name,
       email: email,
       phoneNumber: phoneNumber,
-      password: password,
+      bio: bio,
     );
   }
 }

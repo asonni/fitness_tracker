@@ -42,6 +42,10 @@ class App extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Color(0xFF1A237E),
         ),
+        navigationBarTheme: NavigationBarThemeData(
+          indicatorColor: Colors.white.withValues(alpha: 0.1),
+          backgroundColor: const Color(0xFF1A237E),
+        ),
       ),
       getPages: AppRoutes.getPages,
       initialRoute: RouteNames.splash,

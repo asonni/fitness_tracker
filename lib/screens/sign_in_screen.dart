@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../config/router-configs/route_names.dart';
-import '../controllers/sign_in_controller.dart';
 import '../utils/validators.dart';
 import '../widgets/app_button.dart';
+import '../controllers/sign_in_controller.dart';
+import '../config/router-configs/route_names.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});

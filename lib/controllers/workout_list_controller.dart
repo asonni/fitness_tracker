@@ -4,15 +4,12 @@ import 'package:uuid/uuid.dart';
 import '../enums/workout_type.dart';
 import '../utils/app_snackbars.dart';
 import '../models/workout_model.dart';
-import '../services/auth_service.dart';
 import '../services/workout_service.dart';
-import '../config/router-configs/route_names.dart';
 
 class WorkoutListController extends GetxController {
   static WorkoutListController get instance =>
       Get.find<WorkoutListController>();
 
-  final _authService = Get.find<AuthService>();
   final _workoutService = Get.put(WorkoutService());
 
   final RxBool isLoading = false.obs;
@@ -42,7 +39,7 @@ class WorkoutListController extends GetxController {
     }
   }
 
-  Future<void> addWorkout({
+  Future<bool> addWorkout({
     required String name,
     required double weight,
     required int reps,
@@ -63,15 +60,13 @@ class WorkoutListController extends GetxController {
     try {
       await _workoutService.addWorkout(workout);
       workouts.add(workout);
-      AppSnackbars.successSnackbar(
-        title: 'Workout Added',
-        message: 'The workout has been successfully added.',
-      );
+      return true;
     } catch (e) {
       AppSnackbars.errorSnackbar(
         title: 'Error adding workout',
         message: e.toString(),
       );
+      return false;
     } finally {
       isAdding.value = false;
     }
@@ -112,18 +107,6 @@ class WorkoutListController extends GetxController {
     } catch (e) {
       AppSnackbars.errorSnackbar(
         title: 'Error updating workout',
-        message: e.toString(),
-      );
-    }
-  }
-
-  Future<void> signOut() async {
-    try {
-      await _authService.signOut();
-      Get.offAllNamed(RouteNames.signin);
-    } catch (e) {
-      AppSnackbars.errorSnackbar(
-        title: 'Error signing out',
         message: e.toString(),
       );
     }

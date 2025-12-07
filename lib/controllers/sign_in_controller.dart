@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '../config/router-configs/route_names.dart';
-import '../services/auth_service.dart';
 import '../utils/app_snackbars.dart';
+import '../services/auth_service.dart';
+import '../config/router-configs/route_names.dart';
 
 class SignInController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -34,7 +34,7 @@ class SignInController extends GetxController {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      Get.offAllNamed(RouteNames.workoutList);
+      Get.offAllNamed(RouteNames.main);
     } catch (e) {
       // Handle sign-in error
       AppSnackbars.errorSnackbar(title: 'Sign In Error', message: e.toString());

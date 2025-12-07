@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-import '../controllers/workout_list_controller.dart';
 import '../enums/workout_type.dart';
 import '../widgets/circular_indicator.dart';
 import '../widgets/workout_form_dialog.dart';
 import '../widgets/workout_calendar_graph.dart';
+import '../controllers/workout_list_controller.dart';
 
 class WorkoutListScreen extends StatelessWidget {
   const WorkoutListScreen({super.key});
@@ -24,19 +24,7 @@ class WorkoutListScreen extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.only(bottom: 56.0, left: 16.0, right: 16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        workoutController.signOut();
-                      },
-                      icon: Icon(Icons.logout_outlined),
-                    ),
-                    WorkoutCalendarGraph(),
-                  ],
-                ),
+                child: WorkoutCalendarGraph(),
               ),
             ),
           ),
